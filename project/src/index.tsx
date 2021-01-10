@@ -1,9 +1,10 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import React from "react";
+import ReactDOM from "react-dom";
 
-import UserComponent from "./view/UserComponent";
+import IndexView from "./view/IndexView";
+import './i18n/i18n';
 
 ReactDOM.render(
-  <UserComponent data={{name:"TypeScript"}}/>,
+  <IndexView />,
   document.getElementById('root') as HTMLElement
 );
