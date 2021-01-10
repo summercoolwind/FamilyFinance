@@ -1,5 +1,5 @@
 export default class UserRole {
-    public id:string;
+    public id:number;
     public name:string;
     public roleId:number;
 }

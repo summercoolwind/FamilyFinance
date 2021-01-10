@@ -1,4 +1,4 @@
 export default class Role {
-    public id:string;
+    public id:number;
     public name:string;
 }

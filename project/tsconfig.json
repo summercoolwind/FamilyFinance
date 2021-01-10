@@ -1,15 +1,21 @@
 {
     "compilerOptions": {
-      "outDir": "./dist/",
+      "outDir": "./dist/server",
+      "typeRoots": ["./@types","./node_modules/@types"],
       "sourceMap": true,
-      "noImplicitAny": true,
+      "allowJs": true,
+      "resolveJsonModule": true,
+      "esModuleInterop":true,
+      "noImplicitAny": false,
+      "strict": false,
       "module": "commonjs",
       "target": "es5",
-      "jsx": "react"
+      "jsx": "react",
+      "types": ["react"]
     },
     "include": [
-      "./src/**/*",
-      "./src/*",
+      "./src/server/**/*",
+      "./src/server/api/*",
     ],
     "exclude": [
       "node_modules",

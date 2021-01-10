@@ -8,7 +8,7 @@ module.exports = (env)=>{
       },
       output: {
         filename: "[name].js",
-        path: __dirname + "/dist"
+        path: __dirname + "/dist/client"
       },
     
       
@@ -22,7 +22,8 @@ module.exports = (env)=>{
           rules: [
             { test: /\.tsx?$/, loader: "ts-loader" },
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
-          ]
+            // { test: /\.ts$/, use: "babel-loader"}
+          ]   
         },
       
         plugins: [
