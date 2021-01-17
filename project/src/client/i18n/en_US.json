@@ -1,0 +1,28 @@
+{
+    "home":"Home",
+    "copy_right":"Why Project",
+    "not_login":"Please login first",
+    "user_name":"User Name",
+    "family_name":"Family Name",
+    "password":"Password",
+    "dont_have_account":"Don‘t have an account?",
+    "create_new_account":"Create an new account",
+    "have_an_account":"Have an account?",
+    "required_user_name":"User name is required",
+    "required_password":"Password is required",
+    "update_password":"Update password",
+    "confirm_password":"Confirm password",
+    "update":"Update",
+    "save_details":"Save detils",
+
+
+    "nav_register":"Register",
+    "nav_login":"Login",
+    "nav_account":"Account",
+    "nav_pay":"Pay List",
+    "nav_income":"Income List",
+    "nav_dashboard":"Dashboard",
+    "nav_finance":"Finance",
+    "nav_setting":"Setting",
+    "nav_admin":"Admin"
+}

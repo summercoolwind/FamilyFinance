@@ -11,7 +11,7 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
-import config from '../config/config';
+import config from '../../config';
 const httpProxy = require('http-proxy');
 const compression = require('compression');
 const connectHistoryApiFallback = require('connect-history-api-fallback')
@@ -20,7 +20,7 @@ const path = require('path')
 import CustomRequest from './CustomRequest'
 import Utils from './Utils'
 app.all('*', function(req:CustomRequest, res, next){
-    console.log("access server" + req.method);
+    console.log("access server " + req.url + "method:" + req.method);
     next();
 });
 app.use(bodyParser.json());// 添加json解析
@@ -43,7 +43,6 @@ app.use('/api', require("./main"));
 app.use('/api/admin', require("./admin"));
 
 mongoose.set('useFindAndModify', false);
-mongoose.Promise = require('bluebird');
 mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`,  (dbErr) =>{
     if (dbErr) {
         console.log(dbErr, "数据库连接失败");

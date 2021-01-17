@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios'
-var config = require('../server/config/config')
+import config from '../../config';
 
 // axios 跨域请求携带 cookie
 axios.defaults.withCredentials = true

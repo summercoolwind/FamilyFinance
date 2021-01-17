@@ -66,6 +66,49 @@ router.post('/login', (req:CustomRequest, res) => {
     });
 });
 
+router.post('/register', (req:CustomRequest, res) => {
+    let {userName, password} = req.body;
+    if (!userName) {
+        Utils.responseClient(res, 400, 2, '');
+        return;
+    }
+    if (!password) {
+      Utils.responseClient(res, 400, 2, '');
+      return;
+    }
+
+    User.findOne({
+        name:userName,
+        password: password
+    }).then((userInfo) => {
+        console.log("find one "  + userInfo);
+        // 查询到说明已经注册过了，返回错误提示
+        if(userInfo){
+            Utils.responseClient(res, 405, 1, '');
+        } else {
+            // 插入一条记录
+            let list = [];
+            list.push({name:userName,password:password});
+            User.insertMany(list).then((userInfo) => {
+                console.log("Insert one "  + userInfo);
+                req.session.userInfo = userInfo;
+                Utils.responseClient(res, 200, 0, '', userInfo);
+                return;
+            }).catch((e) => {
+                console.log("find one exception"  + JSON.stringify(e));
+                Utils.responseClient(res);
+                return;
+            });;
+            return;
+        }
+        return;
+    }).catch((e) => {
+        console.log("find one exception"  + JSON.stringify(e));
+        Utils.responseClient(res);
+        return;
+    });
+});
+
 //用户验证
 router.get('/userInfo',function (req:CustomRequest,res) {
     if(req.session.userInfo){

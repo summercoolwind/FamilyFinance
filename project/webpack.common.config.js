@@ -3,8 +3,8 @@ const HtmlWebpakPlugin = require("html-webpack-plugin");
 module.exports = (env)=>{
     return {
       entry: {
-        "bundle": ["./src/index.tsx"],
-        "main": ["./src/main.tsx"]
+        "bundle": ["./src/client/index.tsx"],
+        // "main": ["./src/client/main.tsx"]
       },
       output: {
         filename: "[name].js",
@@ -28,7 +28,7 @@ module.exports = (env)=>{
       
         plugins: [
           new HtmlWebpakPlugin({
-            template:"./src/index.html",
+            template:"./src/client/index.html",
             filename: './index.html', // 输出文件【注意：这里的根路径是module.exports.output.path】
             showErrors: true,
             inject: 'body',

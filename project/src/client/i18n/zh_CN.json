@@ -1,0 +1,27 @@
+{
+    "home":"主页",
+    "copy_right":"Why的工程",
+    "not_login":"请先登录系统",
+    "user_name":"用户名",
+    "family_name":"家庭名",
+    "password":"密码",
+    "dont_have_account":"还没有账户？",
+    "create_new_account":"创建一个新账户",
+    "have_an_account":"已经有账户了？",
+    "required_user_name":"用户名不能为空",
+    "required_password":"密码不能为空",
+    "update_password":"更新密码",
+    "confirm_password":"确认密码",
+    "update":"更新",
+    "save_details":"保存详情",
+
+    "nav_register":"注册",
+    "nav_login":"登录",
+    "nav_account":"账号管理",
+    "nav_pay":"支出管理",
+    "nav_income":"收入管理",
+    "nav_dashboard":"统计图",
+    "nav_finance":"理财",
+    "nav_setting":"设置中心",
+    "nav_admin":"管理员"
+}

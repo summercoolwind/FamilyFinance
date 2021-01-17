@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-      "outDir": "./dist/server",
+      "outDir": "./dist",
       "typeRoots": ["./@types","./node_modules/@types"],
       "sourceMap": true,
       "allowJs": true,
@@ -15,7 +15,7 @@
     },
     "include": [
       "./src/server/**/*",
-      "./src/server/api/*",
+      "./src/server/api/*", "src/config.ts",
     ],
     "exclude": [
       "node_modules",
