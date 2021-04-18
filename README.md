@@ -45,34 +45,4 @@
 # 六.系统设计
 express + mongodb + React + material-ui + TypeScript
 
-
-sudo mongod --dbpath=/usr/local/software/mongodb-macos-x86_64-4.4.2/data/db
-
-cd /usr/local/software/mongodb-macos-x86_64-4.4.2/bin
-sudo ./mongo
-
-cd /Users/WHY/NodejsProject/Node/adminMongo
-npm start
-
-http://localhost:1234/
-
-
-cd /Users/WHY/NodejsProject/Node/FamilyFinance/project
-npm run server
-npm run build
-npm run tsc
-
-http://127.0.0.1:3030
-
-cd /Users/WHY/NodejsProject/Node/FamilyFinance/project
-npm run server
-
-cd /Users/WHY/NodejsProject/Node/FamilyFinance/project
-npm run client_server
-
-
-http://127.0.0.1:3030
-
-
-
-2021.01.03:实现连接数据库数据的读取，问题，需要指定模型对应的Collection的名字，创建的时候需要用3哥参数  https://blog.csdn.net/weixin_30613727/article/details/96130850
+实现连接数据库数据的读取，问题，需要指定模型对应的Collection的名字，创建的时候需要用3个参数  https://blog.csdn.net/weixin_30613727/article/details/96130850
