@@ -2,3 +2,4 @@
 *.mdj
 */dist/*
 .vscode/launch.json
+project/package-lock.json
