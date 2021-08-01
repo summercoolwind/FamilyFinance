@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
+import React from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { Formik } from "formik";
 import {
   Box,
   Button,
@@ -9,31 +9,28 @@ import {
   Link,
   TextField,
   Typography,
-  makeStyles
-} from '@material-ui/core';
-import Page from '../../component/Page';
-import {request} from '../../fetch/fetch';
-import { useTranslation} from 'react-i18next';
+  makeStyles,
+} from "@material-ui/core";
+import Page from "../../component/Page";
+import { request } from "../../fetch/fetch";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
-    height: '100%',
+    height: "100%",
     paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3)
-  }
+    paddingTop: theme.spacing(3),
+  },
 }));
 
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
   return (
-    <Page
-      className={classes.root}
-      title={t('nav_login')}
-    >
+    <Page className={classes.root} title={t("nav_login")}>
       <Box
         display="flex"
         flexDirection="column"
@@ -43,19 +40,19 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              // userName: 'demo@devias.io',
-              // password: 'Password123'
-              userName: '123',
-              password: '123'
+              userName: "123",
+              password: "123",
             }}
             validationSchema={Yup.object().shape({
-              userName: Yup.string().max(255).required(t('required_user_name')),
-              password: Yup.string().max(255).required(t('required_password'))
+              userName: Yup.string().max(255).required(t("required_user_name")),
+              password: Yup.string().max(255).required(t("required_password")),
             })}
             onSubmit={(value) => {
-              request("http://" + window.location.host+ '/api/login',value,{method:"POST"}).then(data =>{
-                navigate('/app/dashboard', { replace: true });
-              });              
+              request("http://" + window.location.host + "/api/login", value, {
+                method: "POST",
+              }).then((data) => {
+                navigate("/app/dashboard", { replace: true });
+              });
             }}
           >
             {({
@@ -65,22 +62,19 @@ const LoginView = () => {
               handleSubmit,
               isSubmitting,
               touched,
-              values
+              values,
             }) => (
               <form onSubmit={handleSubmit}>
                 <Box mb={3}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                     {t('not_login')}
+                  <Typography color="textPrimary" variant="h2">
+                    {t("not_login")}
                   </Typography>
                 </Box>
                 <TextField
                   error={Boolean(touched.userName && errors.userName)}
                   fullWidth
                   helperText={touched.userName && errors.userName}
-                  label={t('user_name')}
+                  label={t("user_name")}
                   margin="normal"
                   name="userName"
                   onBlur={handleBlur}
@@ -93,7 +87,7 @@ const LoginView = () => {
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
                   helperText={touched.password && errors.password}
-                  label={t('password')}
+                  label={t("password")}
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
@@ -111,21 +105,13 @@ const LoginView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    {t('nav_login')}
+                    {t("nav_login")}
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  {t('dont_have_account')}
-                  {' '}
-                  <Link
-                    component={RouterLink}
-                    to="/register"
-                    variant="h6"
-                  >
-                    {t('nav_register')}
+                <Typography color="textSecondary" variant="body1">
+                  {t("dont_have_account")}{" "}
+                  <Link component={RouterLink} to="/register" variant="h6">
+                    {t("nav_register")}
                   </Link>
                 </Typography>
               </form>

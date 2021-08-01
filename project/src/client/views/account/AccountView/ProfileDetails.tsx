@@ -14,21 +14,6 @@ import {
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
-const states = [
-  {
-    value: "alabama",
-    label: "Alabama",
-  },
-  {
-    value: "new-york",
-    label: "New York",
-  },
-  {
-    value: "san-francisco",
-    label: "San Francisco",
-  },
-];
-
 const useStyles = makeStyles(() => ({
   root: {},
 }));
@@ -36,12 +21,12 @@ const useStyles = makeStyles(() => ({
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
-    firstName: "Katarina",
-    lastName: "Smith",
-    email: "demo@devias.io",
+    firstName: "",
+    lastName: "",
+    email: "",
     phone: "",
-    state: "Alabama",
-    country: "USA",
+    state: "",
+    country: "",
   });
 
   const handleChange = (event) => {
