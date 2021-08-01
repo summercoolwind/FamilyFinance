@@ -40,8 +40,8 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              userName: "123",
-              password: "123",
+              userName: "",
+              password: "",
             }}
             validationSchema={Yup.object().shape({
               userName: Yup.string().max(255).required(t("required_user_name")),
