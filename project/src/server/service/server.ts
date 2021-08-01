@@ -20,7 +20,7 @@ const path = require('path')
 import CustomRequest from './CustomRequest'
 import Utils from './Utils'
 app.all('*', function(req:CustomRequest, res, next){
-    console.log("access server " + req.url + "method:" + req.method);
+    console.log("access server " + req.url + " method:" + req.method);
     next();
 });
 app.use(bodyParser.json());// 添加json解析

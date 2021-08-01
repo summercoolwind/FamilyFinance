@@ -23,6 +23,7 @@
     "nav_pay":"Pay List",
     "nav_income":"Income List",
     "nav_dashboard":"Dashboard",
+    "dashboard_money":"收支统计图",
     "nav_finance":"Finance",
     "nav_setting":"Setting",
     "nav_admin":"Admin"

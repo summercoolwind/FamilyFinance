@@ -15,6 +15,7 @@
     "update":"更新",
     "save_details":"保存详情",
     "profile":"简况",
+    
 
     "nav_register":"注册",
     "nav_login":"登录",
@@ -22,6 +23,7 @@
     "nav_pay":"支出管理",
     "nav_income":"收入管理",
     "nav_dashboard":"统计图",
+    "dashboard_money":"收支统计图",
     "nav_finance":"理财",
     "nav_setting":"设置中心",
     "nav_admin":"管理员"

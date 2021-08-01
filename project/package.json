@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build_dev": "webpack --config webpack.common.config.js",
-    "build": "webpack --watch  --config webpack.common.config.js",
+    "build_dev": "webpack --watch  --config webpack.common.config.js",
+    "build": "webpack --config webpack.common.config.js",
     "tsc": "tsc",
     "server": "node ./dist/server/service/server.js",
     "start": "electron ./dist/main.js"
