@@ -12,13 +12,11 @@ import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import config from '../../config';
-const httpProxy = require('http-proxy');
 const compression = require('compression');
 const connectHistoryApiFallback = require('connect-history-api-fallback')
 const app = Express();
 const path = require('path')
 import CustomRequest from './CustomRequest'
-import Utils from './Utils'
 app.all('*', function(req:CustomRequest, res, next){
     console.log("access server " + req.url + " method:" + req.method);
     next();

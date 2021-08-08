@@ -26,5 +26,10 @@
     "dashboard_money":"收支统计图",
     "nav_finance":"理财",
     "nav_setting":"设置中心",
-    "nav_admin":"管理员"
+    "nav_admin":"管理员",
+
+    "finance_type":"理财类型",
+    "finance_start_time":"开始时间",
+    "finance_continue_time":"持续时间",
+    "finance_profit":"理财收益"
 }

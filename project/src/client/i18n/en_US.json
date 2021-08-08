@@ -26,5 +26,11 @@
     "dashboard_money":"收支统计图",
     "nav_finance":"Finance",
     "nav_setting":"Setting",
-    "nav_admin":"Admin"
+    "nav_admin":"Admin",
+
+
+    "finance_type":"Financial management type",
+    "finance_start_time":"Start time",
+    "finance_continue_time":"Continue time",
+    "finance_profit":"Finance profit"
 }

@@ -2,6 +2,7 @@ var express = require('express');
 import Utils from './Utils'
 import User from '../dao/model/User';
 import CustomRequest from './CustomRequest'
+import UserFinance from '../dao/model/UserFinance';
 const router = express.Router();
 //  增加数据
 router.post('/addDataItem', (req:CustomRequest, res) => {
@@ -35,7 +36,7 @@ router.get('/getDataDetail', (req:CustomRequest, res) => {
 router.post('/login', (req:CustomRequest, res) => {
     let {userName, password} = req.body;
     // let {userName, password}  = req.query;
-    console.log("Router login " + userName + password)
+    console.log("Router login " + userName + " password "+ password)
     if (!userName) {
         Utils.responseClient(res, 400, 2, '');
         return;
@@ -113,6 +114,21 @@ router.post('/register', (req:CustomRequest, res) => {
 router.get('/userInfo',function (req:CustomRequest,res) {
     if(req.session.userInfo){
         Utils.responseClient(res,200,0,'',req.session.userInfo)
+    }else{
+        Utils.responseClient(res,200,1,'请重新登录',req.session.userInfo);
+    }
+});
+
+router.get('/finance/list',function (req:CustomRequest,res) {
+    if(req.session.userInfo){
+     UserFinance.find().then((financeList)=>{
+        console.log("find financeList "  + financeList);
+        if (financeList) {
+            Utils.responseClient(res, 200, 0, '', financeList);
+            return;
+        }
+        Utils.responseClient(res, 405, 1, "[]");
+     });
     }else{
         Utils.responseClient(res,200,1,'请重新登录',req.session.userInfo)
     }

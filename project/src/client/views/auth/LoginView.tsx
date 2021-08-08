@@ -51,6 +51,7 @@ const LoginView = () => {
               request("http://" + window.location.host + "/api/login", value, {
                 method: "POST",
               }).then((data) => {
+                // TODO用户信息添加到缓存
                 navigate("/app/dashboard", { replace: true });
               });
             }}
