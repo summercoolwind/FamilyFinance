@@ -22,12 +22,12 @@ const DashboardView = () => {
   let datasets = [
     {
       backgroundColor: indigo[500],
-      data: [10,10,30,40,50,60,70,80,10,10,20,20],
+      data: [10, 10, 30, 4, 5, 6, 7, 8, 1, 1, 2, 2],
       label: t("dashboard_income"),
     },
     {
       backgroundColor: grey[200],
-      data: [30,50,80,120,150,160,170,180,110,100,200,210],
+      data: [30, 5, 8, 12, 15, 16, 17, 18, 11, 10, 2, 5],
       label: t("dashboard_pay"),
     },
   ];
@@ -39,9 +39,10 @@ const DashboardView = () => {
       { name: "2018", value: 2018 },
       { name: "2019", value: 2019 },
       { name: "2020", value: 2020 },
-    ]
+      { name: "2021", value: 2021 },
+    ],
   };
-  let selectIndex = 2019;
+  let selectIndex = 2021;
 
   return CustomBar(datasets, labelLst, selectOption, selectIndex);
 };

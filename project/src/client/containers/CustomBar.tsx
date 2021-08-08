@@ -94,7 +94,7 @@ const CustomBar = (dataSets, labelLst, selectOption, selectIndex) => {
     })
   );
   const classes = useStyles();
-  const [age, setAge] = React.useState("10");
+  const [age, setAge] = React.useState( selectIndex as string);
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setAge(event.target.value as string);
   };
