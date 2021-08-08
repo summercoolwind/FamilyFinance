@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Container, makeStyles } from '@material-ui/core';
-import Page from '../../../component/Page';
+import Page from '../../component/Page';
 import { useTranslation } from 'react-i18next';
-import CustomTable from '../../../containers/CustomTable';
+import CustomTable from '../../containers/CustomTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {

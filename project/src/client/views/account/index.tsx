@@ -4,8 +4,8 @@ import {
   Grid,
   makeStyles
 } from '@material-ui/core';
-import Page from '../../../component/Page';
-import ProfileDetails from './ProfileDetails';
+import Page from '../../component/Page';
+import ProfileDetails from './AccountView/ProfileDetails';
 import { useTranslation} from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({

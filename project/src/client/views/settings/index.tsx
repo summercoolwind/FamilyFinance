@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Container, makeStyles } from "@material-ui/core";
-import Page from "../../../component/Page";
-import Password from "./Password";
+import Page from "../../component/Page";
+import Password from "./SettingsView/Password";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({

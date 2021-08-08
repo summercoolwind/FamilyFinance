@@ -45,10 +45,10 @@ const CustomTable = (columns, getRowStr) => {
       <TablePagination
         component="div"
         count={rows.length}
-        onChangePage={(event, curPageIndex) => {
+        onPageChange={(event, curPageIndex) => {
           changePageIndex(curPageIndex);
         }}
-        onChangeRowsPerPage={(event) => {
+        onRowsPerPageChange={(event) => {
           changePageSize(parseInt(event.target.value));
         }}
         page={pageIndex}
@@ -73,7 +73,7 @@ const getTowCells = (customer: any, columns: any): string | number | boolean | {
   let columnsCellLst = [];
   for (let columIndex = 0; columIndex < columns.length; columIndex++) {
     columnsCellLst.push(
-      <TableCell>{customer[columns[columIndex]].key}</TableCell>);
+      <TableCell>{customer[columns[columIndex].key]}</TableCell>);
   }
   return (<TableRow hover key={customer._id}>
     {columnsCellLst}

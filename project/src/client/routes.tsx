@@ -2,15 +2,15 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from './layouts/DashboardLayout';
 import MainLayout from './layouts/MainLayout';
-import AccountView from './views/account/AccountView';
-import PayListView from './views/pay/PayListView';
-import DashboardView from './views/reports/DashboardView';
+import AccountView from './views/account/index';
+import PayListView from './views/pay/index';
+import DashboardView from './views/reports/index';
 import LoginView from './views/auth/LoginView';
 import NotFoundView from './views/errors/NotFoundView';
-import IncomeListView from './views/income/IncomeListView';
-import FinanceListView from './views/finance/FinanceListView';
+import IncomeListView from './views/income/index';
+import FinanceListView from './views/finance/index';
 import RegisterView from './views/auth/RegisterView';
-import SettingsView from './views/settings/SettingsView';
+import SettingsView from './views/settings/index';
 
 const routes = [
   {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Container, Grid, makeStyles } from "@material-ui/core";
-import Page from "../../../component/Page";
+import Page from "../../component/Page";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
