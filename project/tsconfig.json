@@ -11,14 +11,16 @@
       "module": "commonjs",
       "target": "es5",
       "jsx": "react",
-      "types": ["react"]
+      "types": ["react","node"]
     },
     "include": [
-      "./src/server/**/*",
-      "./src/server/api/*", "src/config.ts",
+      "./src/*",
+      "./src/**/*",
     ],
     "exclude": [
       "node_modules",
       "dist"
-    ]
+    ],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
 }

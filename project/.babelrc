@@ -2,6 +2,7 @@
   "presets": [
     "env",
     "react",
+    "node",
     "stage-0"
   ],
   "plugins": [

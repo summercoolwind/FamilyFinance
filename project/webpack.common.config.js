@@ -2,43 +2,40 @@ const HtmlWebpakPlugin = require("html-webpack-plugin");
 
 module.exports = (env)=>{
     return {
-      devServer: {
-        contentBase: './dist',
-        host: 'localhost',
-        port: 4000,
-        inline:true,  //缺少该配置，会出现上面的错误
-        historyApiFallback:true  //缺少该配置，会出现上面的错误
-      },
       entry: {
-        "bundle": ["./src/client/index.tsx"]
+        "bundle": ["./src/app.ts"]
       },
       output: {
         filename: "[name].js",
-        path: __dirname + "/dist/client"
+        path: __dirname + "/dist"
       },
       devtool: "source-map",
     
       resolve: {
-        extensions: [".ts", ".tsx", ".js", ".json"]
+        extensions: [".ts", ".tsx", ".js", ".json"],
+        alias: {
+          // 'express-handlebars':'handlebars/dist/handlebars.js',
+          crypto: false,
+          stream: false,
+          assert: false,
+          http: false,
+          https: false
+        },
+        fallback:{
+          "url":false,
+          "querystring": require.resolve("querystring-es3"),
+          "zlib": require.resolve("browserify-zlib"),
+          "constants": require.resolve("constants-browserify"),
+          fs:false,
+          net:false,
+        }
       },
-    
+      
       module: {
         rules: [
           { test: /\.tsx?$/, loader: "ts-loader" },
           { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
-          // { test: /\.ts$/, use: "babel-loader"}
         ]   
-      },
-    
-      plugins: [
-        new HtmlWebpakPlugin({
-          template:"./src/client/index.html",
-          filename: './index.html', // 输出文件【注意：这里的根路径是module.exports.output.path】
-          showErrors: true,
-          inject: 'body',
-          chunks: ["bundle"]
-        })
-      ],
-      target: "electron-renderer"
+      }
     };
 };
