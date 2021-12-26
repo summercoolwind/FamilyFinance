@@ -1,25 +1,47 @@
 import express from 'express';
 import morgan from 'morgan';
-import handlebars from 'handlebars';
+const passport = require('passport');
+const session = require('express-session');
+const path = require('path');
+const handlebars = require('express-handlebars');
+const bodyParser = require('body-parser');
 const config = require('./config/config');
 const connectDB = require('./dao/db');
-// connect db
+// 连接数据库，异步任务，连接失败就退出程序
 connectDB();
 
 const app = express();
-
-// logging
+require('./config/passport')(passport);
+// 日志
 if(process.env.NODE_EVN === 'development'){
     app.use(morgan('dev'));
 }
 
-// views
-app.set('view engine','.hbs');
+// 视图模版
+app.engine('.hbs', handlebars.engine());
+app.set('view engine', '.hbs');
 
-app.use('/',require('./routes/index'));
+app.use(session({
+    secret:'keyboard hahahhahaha',
+    resave: false
+}));
+// 解析 application/json
+app.use(bodyParser.json()); 
+// 解析 application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded());
+
+// 设置认证中间件
+app.use(passport.initialize());
+app.use(passport.session());
+
+// 静态文件目录，css等 
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 路由文件
+app.use('/', require('./routes/index'));// 默认路由实现
 
 const PORT = config.PORT || 5000;
-
+// 启动监听
 app.listen(
     PORT,()=>{
         console.log(`Example app listening on port http://127.0.0.1:${PORT}`);

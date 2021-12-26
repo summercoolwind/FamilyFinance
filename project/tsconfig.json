@@ -15,7 +15,8 @@
     },
     "include": [
       "./src/*",
-      "./src/**/*",
+      "./src/**/*", "src/app.ts", "src/config",
+      "src/routes"
     ],
     "exclude": [
       "node_modules",

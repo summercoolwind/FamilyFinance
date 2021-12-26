@@ -7,7 +7,7 @@
     "build": "webpack --config  --mode=product webpack.common.config.js",
     "tsc": "tsc",
     "watch-ts": "tsc -w",
-    "start": "ts-node-dev ./src/app.ts",
+    "start": "ts-node-dev ./src/app.ts  --mode=development",
     "start_electron": "electron ./dist/main.js"
   },
   "dependencies": {
