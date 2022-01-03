@@ -1,4 +1,4 @@
-import UserRole from "../server/model/UserRole";
+export {};
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
@@ -10,9 +10,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    userRoleId: {
-        type: Number,
-        required: true
+    role: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Role'
     }
 });
 

@@ -1,0 +1,46 @@
+<div class="row">
+    <form action="/finance/add" method="post">
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" id="finance_name" name="name" class="validate" 
+                placeholder="请输入理财信息名称，最少5个字符，最多50个字符">
+                <label for="finance_name"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="number" id="value" name="value" class="validate" 
+                placeholder="请输入理财">
+                <label for="value">理财费用：</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="day" name="startDay" type="text" class="datepicker" 
+                placeholder="请选择理财日期">
+                <label for="startDay">理财日期：</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="day" name="continueDay" type="number"  placeholder="请选择持续时长">
+                <label for="continueDay">理财时长（天）：</label>
+            </div>
+        </div>
+        {{#if financeTypes}}
+        <div class="row">
+            <div class="input-field col s12">
+                <select id="financeType" name="financeType">
+                    {{#each financeTypes}}
+                    <option value={{id}} }>{{name}}</option>
+                    {{/each}}
+                </select>
+                <label for="financeType">理财类型：</label>
+            </div>
+        </div>
+        {{/if}}
+        <div class="row">
+            <button type="submit" class="btn waves-effect waves-light">添加理财</button>
+        </div>
+    </form>
+</div>

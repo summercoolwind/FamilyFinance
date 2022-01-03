@@ -1,0 +1,27 @@
+<div class="row">
+    {{#if users}}
+    <form action="/family/addmember" method="post" class="col s12">
+        <div class="row" style="display: none;">
+            <div class="input-field col s12">
+                <input type="text" id="familyId" name="family" 
+                value={{familyId}}>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select id="user" name="familyUser">
+                    {{#each users}}
+                    <option value={{_id}} }>{{name}}</option>
+                    {{/each}}
+                </select>
+                <label>用户名：</label>
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn waves-effect waves-light">添加家庭成员</button>
+        </div>
+    </form>
+    {{else}}
+    <h5>没有可添加的候选用户</h5>
+    {{/if}}
+</div>

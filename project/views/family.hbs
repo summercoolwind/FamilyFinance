@@ -1,0 +1,89 @@
+
+<div class="section text-aligin-center family-page">
+{{#if familyName}}
+<h6><i class="fas fa-piggy-bank"></i>家庭名称:{{familyName}}</h6>
+<div class="row">
+    <div class="col s2"></div>
+    <div class="col s8">
+        <table class="bordered highlight centered responsive-table">
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>创建者</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {{#if familyMembers}}
+                {{#each familyMembers}}
+                <tr>
+                    <td>{{userName}}</td>
+                    {{#if owner}}
+                    <td>是</td>
+                    {{else}}
+                    <td>否</td>
+                    {{/if}}
+                </tr>
+                {{/each}}
+                {{/if}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{#if isFamilyOwner}}
+<div class="row" style="margin-top: 0;">
+    <div class="col s8"></div>
+    <div class="col s1">
+        <a class="btn-floating btn-small waves-effect waves-light blue" href='/family/member/{{familyId}}'>
+            <i class="material-icons">add</i></a>
+    </div>
+</div>
+{{else}}
+<p>你不是创建者，只能查看，不可编辑</p>
+{{/if}}
+{{else }}
+<h6><i class="fas fa-piggy-bank"></i>你还没有创建或加入家庭，请添加或申请家庭</h6>
+<div class="row">
+    <div class="col s3"></div>
+    <div class="col s6">
+        <ul class="tabs">
+            <li class="tab col s6"><a href="#create">创建</a></li>
+            {{!-- <li class="tab col s6"><a href="#apply">申请加入</a></li> --}}
+        </ul>
+    </div>
+    <div class="col s3"></div>
+
+    <div id="create" class="col s12 ">
+        <div class="container login-container">
+            <form action="/family/add" method="post" class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" id="user_name" name="familyName" class="validate" placeholder="请输入你要创建的家庭名，创建后不可修改。">
+                        <label for="user_name">家庭名：</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn waves-effect waves-light">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {{!-- <div id="apply" class="col s12">
+        <div class="container login-container">
+            <form action="/family/apply" method="post" class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" id="user_name" name="familyName" class="validate" placeholder="请输入你要加入的家庭名">
+                        <label for="user_name">家庭名：</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn waves-effect waves-light">申请加入</button>
+                </div>
+            </form>
+        </div>
+    </div> --}}
+</div>
+{{/if}}
+</div>
+

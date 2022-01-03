@@ -2,8 +2,39 @@ p {
     margin: 1rem 0 !important;
 }
 
+.login-background{
+    height: 100%;
+    width: 100%;
+}
+
+.text-aligin-center{
+    text-align: center;
+}
+
 .login-container{
     width: 40rem;
     margin-top: 3rem;
     text-align: center;
+    background-color: transparent;
+}
+
+.family-page .tabs .indicator{
+    background-color:#2196f3;
+}
+
+.family-page .tabs .tab a {
+    color: #039be5;
+}
+.family-page .tabs .tab a:active {
+    color: #039be5;
+}
+.family-page .tabs .tab a:focus{
+    background-color: rgba(3,155,229,0.2);
+}
+
+.family-page .tabs .tab a:focus.active {
+    background-color: rgba(3,155,229,0.2);
+}
+.main{
+    min-height: 400px;
 }

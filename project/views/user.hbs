@@ -1,0 +1,36 @@
+<div class="section">
+    <div class="container login-container">
+        <h5><i class="fas fa-piggy-bank"></i>用户信息编辑，暂时不支持更新</h5>
+        <form action="/user/update" method="post" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="user_name" name="name" class="validate"
+                    placeholder="请输入用户名，最少5个字符，最多50个字符"
+                    readonly
+                    value={{userName}}>
+                    <label for="user_name">用户名：</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="password" id="password" name="password" class="validate" 
+                    placeholder="请输入密码，最少10位，最多255位"
+                    value={{userPassword}}>
+                    <label for="password">密码：</label>
+                </div>
+            </div>
+            {{#if roles}}
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="role" name="role">
+                        {{#each roles}}
+                        <option value={{_id}} }>{{name}}</option>
+                        {{/each}}
+                    </select>
+                    <label>角色类型：</label>
+                </div>
+            </div>
+            {{/if}}
+        </form>
+    </div>
+</div>

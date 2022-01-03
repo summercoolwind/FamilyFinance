@@ -1,0 +1,38 @@
+{{#if errorMsg}}
+<p class="red-text">{{errorMsg}}</p>
+{{/if}}
+{{#if finances}}
+<div class="row">
+    <div class="col s12">
+        <table class="bordered highlight centered responsive-table">
+            <thead>
+                <tr>
+                    <th>理财名称</th>
+                    <th>理财金额</th>
+                    <th>理财日期</th>
+                    <th>持续时长</th>
+                    <th>类型</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each finances}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{value}}</td>
+                    <td>{{startDay}}</td>
+                    <td>{{continueDay}}</td>
+                    <td>{{financeType}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/if}}
+<div class="row" style="margin-top: 0;">
+    <div class="col s11"></div>
+    <div class="col s1">
+        <a class="btn-floating btn-small waves-effect waves-light blue" href='/finance/add'>
+            <i class="material-icons">add</i></a>
+    </div>
+</div>

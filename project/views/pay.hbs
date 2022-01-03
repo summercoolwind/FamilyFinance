@@ -1,0 +1,31 @@
+{{#if pays}}
+    <div class="row">
+        <div class="col s12">
+            <table class="bordered highlight centered responsive-table">
+                <thead>
+                    <tr>
+                        <th>支出费用</th>
+                        <th>日期</th>
+                        <th>时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each pays}}
+                        <tr>
+                            <td>{{value}}</td>
+                            <td>{{day}}</td>
+                            <td>{{time}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{/if}}
+<div class="row" style="margin-top: 0;">
+    <div class="col s11"></div>
+    <div class="col s1">
+        <a class="btn-floating btn-small waves-effect waves-light blue" href='/pay/add'>
+            <i class="material-icons">add</i></a>
+    </div>
+</div>
