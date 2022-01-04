@@ -6,10 +6,10 @@ const Income = require('../models/Income');
 const User = require('../models/User');
 
 // 用户界面加载实现
-router.get('/', ensureAuth, (req, res) => {
+router.get('/', ensureAuth, (req, res, next) => {
     Income.find({ user: req.user._id }, (err, results) => {
         if (err) {
-            res.render('error/500');
+            next(err);
         } else {
             let incomes = results.map(result => {
                 return { value: `${result.value}`, day: result.day, time: result.time };
@@ -45,15 +45,13 @@ router.get('/add', ensureAuth, (req, res) => {
 });
 
 // 添加用户
-router.post('/add', ensureAuth, (req, res) => {
+router.post('/add', ensureAuth, (req, res, next) => {
     let { body } = req;
     let income = new Income({ ...body,  user: req.user._id});
     income.save(income, (err, result) => {
         if (err) {
             console.log(err);
-            res.render('error/500',{
-                layout:'login'
-            });
+            next(err);
         } else {
             res.redirect('/income');
         }

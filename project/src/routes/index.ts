@@ -34,7 +34,7 @@ router.get('/logout', ensureAuth, (req, res) => {
 });
 
 // 登出页面
-router.get('/register',  (req, res) => {
+router.get('/register',  (req, res, next) => {
     try {
         Role.find().lean().then((roles) => {
             res.render('register', {
@@ -44,9 +44,7 @@ router.get('/register',  (req, res) => {
         });
     } catch (err) {
         console.log(err);
-        res.render('error/500',{
-            layout:'login'
-        });
+        next(err);
     }                           
 });
 

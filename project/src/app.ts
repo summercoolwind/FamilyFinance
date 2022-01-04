@@ -54,9 +54,16 @@ app.use('/finance', require('./routes/finance'));// 理财管理
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(function (req, res) {
     res.render('error/404', {
-        layout:'login'
+        layout: 'login'
     });
-})
+});
+app.use(function (err, req, res, next) {
+    if (err) {
+        res.render('error/500', {
+            layout: 'login'
+        });
+    }
+});
 const PORT = config.PORT || 5000;
 // 启动监听
 app.listen(

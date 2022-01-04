@@ -6,16 +6,16 @@ const Finance = require('../models/Finance');
 const FinanceType = require('../models/FinanceType');
 
 // 用户界面加载实现
-router.get('/', ensureAuth, (req, res) => {
+router.get('/', ensureAuth, (req, res, next) => {
     FinanceType.find((tErr, tResults) => {
         if (tErr) {
             console.log(tErr);
-            res.render('error/500');
+            next(tErr);
             return;
         }
         Finance.find({ user: req.user._id }, (err, results) => {
             if (err) {
-                res.render('error/500');
+                next(err);
             } else {
                 let finances = results.map(result => {
                     return {
@@ -54,11 +54,11 @@ router.get('/query/summary', ensureAuth, async (req, res) => {
 });
 
 // 添加用户
-router.get('/add', ensureAuth, (req, res) => {
+router.get('/add', ensureAuth, (req, res, next) => {
     FinanceType.find((err, results) => {
         if (err) {
             console.log(err);
-            res.render('error/500');
+            next(err);
             return;
         }
         let financeTypes = results.map(result => {
@@ -73,15 +73,13 @@ router.get('/add', ensureAuth, (req, res) => {
 });
 
 // 添加用户
-router.post('/add', ensureAuth, (req, res) => {
+router.post('/add', ensureAuth, (req, res, next) => {
     let { body } = req;
     let finance = new Finance({ ...body,  user: req.user._id});
     finance.save(finance, (err, result) => {
         if (err) {
             console.log(err);
-            res.render('error/500',{
-                layout:'login'
-            });
+            next(err);
         } else {
             res.redirect('/finance');
         }
