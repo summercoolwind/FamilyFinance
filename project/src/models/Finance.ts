@@ -11,7 +11,7 @@ const FinanceSchema = new mongoose.Schema({
         required: true,
     },
     startDay: {
-        type: String,
+        type: Date,
         required: true,
     },
     continueDay: {

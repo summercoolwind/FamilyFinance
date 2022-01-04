@@ -6,11 +6,7 @@ const PaySchema = new mongoose.Schema({
         required: true,
     },
     day: {
-        type: String,
-        required: true,
-    },
-    time: {
-        type: String,
+        type: Date,
         required: true,
     },
     user: {
