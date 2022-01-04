@@ -4,16 +4,19 @@
         <form action="/user/update" method="post" class="col s12">
             <div class="row">
                 <div class="input-field col s12">
-                    <input type="text" id="user_name" name="name" class="validate"
+                    <input type="text" id="user_name" name="name" 
+                    disabled
+                    class="validate"
                     placeholder="请输入用户名，最少5个字符，最多50个字符"
-                    readonly
                     value={{userName}}>
                     <label for="user_name">用户名：</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input type="password" id="password" name="password" class="validate" 
+                    <input type="password" id="password" 
+                    disabled
+                    name="password" class="validate" 
                     placeholder="请输入密码，最少10位，最多255位"
                     value={{userPassword}}>
                     <label for="password">密码：</label>
@@ -24,7 +27,11 @@
                 <div class="input-field col s12">
                     <select id="role" name="role">
                         {{#each roles}}
-                        <option value={{_id}} }>{{name}}</option>
+                            {{#ifEquals ../roleId _id}}
+                            <option value={{_id}} disabled selected>{{name}}</option>
+                            {{else}}
+                            <option value={{_id}} disabled>{{name}}</option>
+                            {{/ifEquals}}
                         {{/each}}
                     </select>
                     <label>角色类型：</label>

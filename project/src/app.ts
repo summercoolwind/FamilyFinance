@@ -18,14 +18,13 @@ if(process.env.NODE_EVN === 'development'){
 }
 
 // 视图模版
-handlebars.create({
+app.engine('.hbs', handlebars.engine({
     helpers: {
-        ifEquals:function(a1,a2,options)  {
-            return a1 === a2 ? options.fn(this) : options.inverse(this);
+        ifEquals: function (a1, a2, options) {
+            return String(a1) === String(a2) ? options.fn(this) : options.inverse(this);
         }
     }
-});
-app.engine('.hbs', handlebars.engine());
+}));
 app.set('view engine', '.hbs');
 
 app.use(session({
@@ -59,6 +58,7 @@ app.use(function (req, res) {
 });
 app.use(function (err, req, res, next) {
     if (err) {
+        console.log(err);
         res.render('error/500', {
             layout: 'login'
         });
