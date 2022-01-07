@@ -1,6 +1,7 @@
 export {};
 const mongoose = require('mongoose');
 const config = require('../config/config');
+// 数据库连接
 const connectDB = async ()=>{
     try {
         const conn = await mongoose.connect(config.mongoDbUri ,{

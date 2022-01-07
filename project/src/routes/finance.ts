@@ -1,43 +1,45 @@
 export { };
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const { ensureAuth } = require('../middleware/auth');
 const Finance = require('../models/Finance');
 const FinanceType = require('../models/FinanceType');
 
-// 用户界面加载实现
+// 理财界面加载实现
 router.get('/', ensureAuth, (req, res, next) => {
-    FinanceType.find((tErr, tResults) => {
-        if (tErr) {
-            console.log(tErr);
-            next(tErr);
-            return;
-        }
-        Finance.find({ user: req.user._id }, (err, results) => {
-            if (err) {
-                next(err);
-            } else {
-                let finances = results.map(result => {
+    // TODO  聚合查询
+    Finance.aggregate([
+        { $match: { user: mongoose.Types.ObjectId(req.user._id) } }
+    ], (err, results) => {
+        if (err) {
+            next(err);
+        } else {
+            FinanceType.find((tErr, tResults) => {
+                if (tErr) {
+                    next(tErr);
+                    return;
+                }
+                 let typeResults = {};
+                 tResults.forEach(tResult => {
+                    typeResults[tResult._id] = tResult.typeName;
+                 });
+                 let finances = results.map(result => {
                     return {
-                        name: result.name,
-                        value: `${result.value}`,
-                        startDay: result.startDay,
-                        continueDay: String(result.continueDay),
-                        financeType: result.financeType
-                    };
-                });
-                let financeTypes = tResults.map(result => {
-                    return {name:result.typeName,id:result._id};
-                })
-                console.log(JSON.stringify(financeTypes));
-                res.render('finance', {
-                    userName: req.user.name,
-                    userId: req.user._id,
-                    finances: finances,
-                    financeTypes:financeTypes
-                });
-            }
-        });
+                            name: result.name,
+                            value: `${result.value}`,
+                            startDay: result.startDay,
+                            continueDay: String(result.continueDay),
+                            financeType: typeResults[result.financeType]
+                        };
+                    });
+                    res.render('finance', {
+                        userName: req.user.name,
+                        userId: req.user._id,
+                        finances: finances
+                    });
+            });
+        }
     });
 });
 
@@ -47,7 +49,7 @@ router.get('/query', ensureAuth, async (req, res) => {
     res.send(Finances);
 });
 
-// 用户界面加载实现
+// TODO  查询全部理财数据
 router.get('/query/summary', ensureAuth, async (req, res) => {
     let finances = await Finance.find({ user: req.user._id }).lean();
     res.send(finances);
@@ -55,21 +57,19 @@ router.get('/query/summary', ensureAuth, async (req, res) => {
 
 // 添加用户
 router.get('/add', ensureAuth, (req, res, next) => {
-    FinanceType.find((err, results) => {
-        if (err) {
-            console.log(err);
-            next(err);
-            return;
-        }
-        let financeTypes = results.map(result => {
-            return { name: result.typeName, id: result._id };
+    try {
+        FinanceType.find().lean().then(results => {
+            console.log(JSON.stringify(results));
+            res.render('addfinance', {
+                userName: req.user.name,
+                userId: req.user._id,
+                financeTypes: results
+            });
         });
-        res.render('addfinance', {
-            userName:req.user.name,
-            userId: req.user._id,
-            financeTypes
-        });
-    });
+    } catch (err) { 
+        console.log(err);
+        next(err);
+    }
 });
 
 // 添加用户

@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
-
+// 认证中间件
 module.exports = function (passport) {
   passport.use(new LocalStrategy(
     function (username, password, done) {

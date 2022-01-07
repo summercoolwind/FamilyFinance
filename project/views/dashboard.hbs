@@ -1,3 +1,15 @@
+<div class="card">
+    <div class="card-content">
+        <div class="row">
+            <div class="rol s6">
+                <div class="card">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col s6">
         <div class="card">
@@ -22,83 +34,8 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col s12">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">理财</span>
-                <p>只显示最近6个月的信息
-                <a href="/finance">查看更多...</a>
-                </p>
-                <canvas id="finance_summary"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
-    function ajax(options) {
-        options = options || {};  //调用函数时如果options没有指定，就给它赋值{},一个空的Object
-        options.type = (options.type || "GET").toUpperCase();/// 请求格式GET、POST，默认为GET
-        options.dataType = options.dataType || "json";    //响应数据格式，默认json
-
-        var params = formatParams(options.data);//options.data请求的数据
-
-        var xhr;
-
-        //考虑兼容性
-        if (window.XMLHttpRequest) {
-            xhr = new XMLHttpRequest();
-        } else if (window.ActiveObject) {//兼容IE6以下版本
-            xhr = new ActiveXobject('Microsoft.XMLHTTP');
-        }
-
-        //启动并发送一个请求
-        if (options.type == "GET") {
-            xhr.open("GET", options.url + "?" + params, true);
-            xhr.send(null);
-        } else if (options.type == "POST") {
-            xhr.open("post", options.url, true);
-
-            //设置表单提交时的内容类型
-            //Content-type数据请求的格式
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send(params);
-        }
-
-        //    设置有效时间
-        setTimeout(function () {
-            if (xhr.readySate != 4) {
-                xhr.abort();
-            }
-        }, options.timeout)
-
-        //    接收
-        //     options.success成功之后的回调函数  options.error失败后的回调函数
-        //xhr.responseText,xhr.responseXML  获得字符串形式的响应数据或者XML形式的响应数据
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                var status = xhr.status;
-                if (status >= 200 && status < 300 || status == 304) {
-                    options.success && options.success(xhr.responseText, xhr.responseXML);
-                } else {
-                    options.error && options.error(status);
-                }
-            }
-        }
-    }
-
-    //格式化请求参数
-    function formatParams(data) {
-        var arr = [];
-        for (var name in data) {
-            arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(data[name]));
-        }
-        arr.push(("v=" + Math.random()).replace(".", ""));
-        return arr.join("&");
-    }
-
-
     const date  = new Date();
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
@@ -115,7 +52,6 @@
         result.unshift(`${year}-${month}`);
         month = month - 1;
     }
-    const ctx = document.getElementById('income_summary').getContext('2d');
     const colorLst = [
             'rgba(255, 99, 132, 1)',
             'rgba(255, 99, 132, 1)',
@@ -128,43 +64,40 @@
         indexAxis: 'y',
         scales: {y: {beginAtZero: true}}
     };
-    let dataset =  {
-        label: '收入',
-        data: [0, 0, 0, 0, 0, 0],
-        backgroundColor: colorLst,
-        borderColor: colorLst,
-        borderWidth: 1
-    };
-    let incomeOption = {
+    const incomeOption = {
         type: 'bar',
         data: {
             labels: result,
-            datasets: [dataset]
-        },
+            datasets: [{
+                label: '收入',
+                data:[0,0,0,0,0,0],
+                backgroundColor: colorLst,
+                borderColor: colorLst,
+                borderWidth: 1
+            }]},
         options
     };
-    let curYear = date.getFullYear();
-    let curMonth = date.getMonth() + 1;
+    const payOption = {...incomeOption};
+    payOption.data.datasets[0].label = '支出';
+    payOption.data.datasets[0].data = [];
+     
+    const financeOption = {...incomeOption};
+    financeOption.data.datasets[0].label = '理财';
+    financeOption.data.datasets[0].data = [];
     //基本的使用实例
-    console.log(window.origin);
-    ajax({
-        url: `${window.origin}/income/query/summary`,
-        type: 'get',
-        data: {
-            curYear,
-            curMonth
-        },
-        dataType: 'json',
-        timeout: 10000,
-        contentType: "application/json",
-        success: function (data) {
-            console.log(data);
-            incomeOption.data.datasets[0].data = data;
-            const myChart = new Chart(ctx, incomeOption);
-        },
-        //异常处理
-        error: function (e) {
-            console.log(e);
-        }
+    $.get(`${window.origin}/income/query/summary`,(data,status)=>{
+        incomeOption.data.datasets[0].data = data.split(',');
+        const myChart = new Chart(document.getElementById('income_summary').getContext('2d'),
+            incomeOption);
+    });
+    $.get(`${window.origin}/pay/query/summary`,(data,status)=>{
+        payOption.data.datasets[0].data = data.split(',');
+        const myChart = new Chart(document.getElementById('pay_summary').getContext('2d'),
+            payOption);
+    });
+    $.get(`${window.origin}/finance/query/summary`,(data,status)=>{
+        financeOption.data.datasets[0].data = data.split(',');
+        const myChart = new Chart(document.getElementById('finance_summary').getContext('2d'),
+            financeOption);
     });
 </script>

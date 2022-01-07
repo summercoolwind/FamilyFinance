@@ -3,8 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuth } = require('../middleware/auth');
 const Income = require('../models/Income');
-const User = require('../models/User');
-
+const findSixMonthSummaryByUserId = require('./findSixMonthSummaryByUserId');
 // 用户界面加载实现
 router.get('/', ensureAuth, (req, res, next) => {
     Income.find({ user: req.user._id }, (err, results) => {
@@ -31,9 +30,8 @@ router.get('/query', ensureAuth, async (req, res) => {
 
 // 用户界面加载实现
 router.get('/query/summary', ensureAuth, async (req, res) => {
-
-    let incomes = await Income.find({ user: req.user._id }).lean();
-    res.send(incomes);
+    let result = await findSixMonthSummaryByUserId(req.user._id, Income);
+    res.send(result);
 });
 
 // 添加用户
@@ -44,10 +42,12 @@ router.get('/add', ensureAuth, (req, res) => {
     });
 });
 
-// 添加用户
+// 添加支出记录
 router.post('/add', ensureAuth, (req, res, next) => {
     let { body } = req;
-    let income = new Income({ ...body,  user: req.user._id});
+    let { day } = body;
+    let isoDate = new Date(day);
+    let income = new Income({ ...body, day:isoDate, user: req.user._id});
     income.save(income, (err, result) => {
         if (err) {
             console.log(err);
