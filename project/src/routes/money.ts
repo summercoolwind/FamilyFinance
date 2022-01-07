@@ -7,5 +7,7 @@ const Pay = require('../models/Pay');
 const { ensureAuth } = require('../middleware/auth');
 
 router.get('/summary', ensureAuth, async (req, res, next) => {
-    
+
 });
+
+module.exports = router;

@@ -48,6 +48,7 @@ app.use('/family', require('./routes/family'));// 家庭管理
 app.use('/income', require('./routes/income'));// 收入管理
 app.use('/pay', require('./routes/pay'));// 支出管理
 app.use('/finance', require('./routes/finance'));// 理财管理
+app.use('/money', require('./routes/money'));// 余额管理
 
 // 静态文件目录，css等 
 app.use(express.static(path.join(__dirname, 'public')));

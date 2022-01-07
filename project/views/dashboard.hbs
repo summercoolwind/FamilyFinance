@@ -95,9 +95,4 @@
         const myChart = new Chart(document.getElementById('pay_summary').getContext('2d'),
             payOption);
     });
-    $.get(`${window.origin}/finance/query/summary`,(data,status)=>{
-        financeOption.data.datasets[0].data = data.split(',');
-        const myChart = new Chart(document.getElementById('finance_summary').getContext('2d'),
-            financeOption);
-    });
 </script>
