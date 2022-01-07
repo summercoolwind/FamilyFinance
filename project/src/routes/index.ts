@@ -13,7 +13,7 @@ router.get('/', ensureGuest, (req, res) => {
 });
 
 
-// 默认路由实现
+// 登录实现加载
 router.get('/login', (req, res) => {
     res.render('login', {
         layout:'login'
@@ -33,7 +33,7 @@ router.get('/logout', ensureAuth, (req, res) => {
     res.redirect('/');                                
 });
 
-// 登出页面
+// 注册页面
 router.get('/register',  (req, res, next) => {
     try {
         Role.find().lean().then((roles) => {
@@ -48,6 +48,7 @@ router.get('/register',  (req, res, next) => {
     }                           
 });
 
+// 登录接口
 router.post('/auth',
     passport.authenticate('local',
         { failureRedirect: '/login', successRedirect: '/dashboard' })

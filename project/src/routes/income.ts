@@ -4,7 +4,8 @@ const router = express.Router();
 const { ensureAuth } = require('../middleware/auth');
 const Income = require('../models/Income');
 const findSixMonthSummaryByUserId = require('./findSixMonthSummaryByUserId');
-// 用户界面加载实现
+
+// 理财界面加载实现
 router.get('/', ensureAuth, (req, res, next) => {
     Income.find({ user: req.user._id }, (err, results) => {
         if (err) {
@@ -22,19 +23,13 @@ router.get('/', ensureAuth, (req, res, next) => {
     });
 });
 
-// 用户界面加载实现
-router.get('/query', ensureAuth, async (req, res) => {
-    let incomes = await Income.find({ user: req.user._id }).lean();
-    res.send(incomes);
-});
-
-// 用户界面加载实现
+// 查询近6个月数据
 router.get('/query/summary', ensureAuth, async (req, res) => {
     let result = await findSixMonthSummaryByUserId(req.user._id, Income);
     res.send(result);
 });
 
-// 添加用户
+// 添加收入界面加载
 router.get('/add', ensureAuth, (req, res) => {
     res.render('addincome', {
         userName:req.user.name,
@@ -42,7 +37,7 @@ router.get('/add', ensureAuth, (req, res) => {
     });
 });
 
-// 添加支出记录
+// 添加收入记录
 router.post('/add', ensureAuth, (req, res, next) => {
     let { body } = req;
     let { day } = body;
@@ -58,7 +53,7 @@ router.post('/add', ensureAuth, (req, res, next) => {
     });
 });
 
-// 更新用户信息目前没有使用，更新后需要刷新登录信息里的用户信息
+// TODO  删除收入记录
 router.post('/delete', ensureAuth, (req, res) => {
     
 });

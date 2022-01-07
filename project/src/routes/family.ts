@@ -86,7 +86,7 @@ router.get('/', ensureAuth, (req, res, next) => {
     });
 });
 
-// 默认路由实现
+// 根据family id查询成员
 router.get('/member/:id', ensureAuth, (req, res, next) => {
     User.aggregate([
         { $lookup: { from: 'Family', as: 'ownUser', localField: '_id', foreignField: 'ownerUser' } },
@@ -105,7 +105,7 @@ router.get('/member/:id', ensureAuth, (req, res, next) => {
     });
 });
 
-// 默认路由实现
+// 添加family
 router.post('/add', ensureAuth, (req, res, next) => {
     let { body } = req;
     let { familyName } = body;
@@ -129,9 +129,9 @@ router.post('/add', ensureAuth, (req, res, next) => {
     });
 });
 
-// 默认路由实现
+// 给家庭添加成员
 router.post('/addmember', ensureAuth, (req, res, next) => {
-    // TODO  给家庭添加成员
+    // 给家庭添加成员
     let { body } = req;
     let { family,familyUser } = body;
     let familyMember = new FamilyMember({family:family,familyUser:familyUser});

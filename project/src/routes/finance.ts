@@ -55,7 +55,7 @@ router.get('/query/summary', ensureAuth, async (req, res) => {
     res.send(finances);
 });
 
-// 添加用户
+// 添加理财界面首页
 router.get('/add', ensureAuth, (req, res, next) => {
     try {
         FinanceType.find().lean().then(results => {
@@ -72,7 +72,7 @@ router.get('/add', ensureAuth, (req, res, next) => {
     }
 });
 
-// 添加用户
+// 添加添加理财
 router.post('/add', ensureAuth, (req, res, next) => {
     let { body } = req;
     let finance = new Finance({ ...body,  user: req.user._id});
@@ -86,7 +86,7 @@ router.post('/add', ensureAuth, (req, res, next) => {
     });
 });
 
-// 更新用户信息目前没有使用，更新后需要刷新登录信息里的用户信息
+// TODO 删除理财
 router.post('/delete', ensureAuth, (req, res) => {
     
 });

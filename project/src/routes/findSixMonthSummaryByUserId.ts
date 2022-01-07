@@ -1,5 +1,6 @@
 export { };
 const mongoose = require('mongoose');
+// 查询最近6个月的收入或支出
 const findSixMonthSummaryByUserId = async (userId, Model) => { 
     let date = new Date();
     let year = date.getFullYear();
