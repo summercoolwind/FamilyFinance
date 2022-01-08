@@ -86,23 +86,29 @@ router.get('/', ensureAuth, (req, res, next) => {
     });
 });
 
+//  查询成员的总收入和支出，和余额
+router.get('/summary', ensureAuth, (req, res, next) => {
+    const familyId = req.params.id;
+
+});
+
 // 根据family id查询成员
 router.get('/member/:id', ensureAuth, (req, res, next) => {
-    User.aggregate([
-        { $lookup: { from: 'Family', as: 'ownUser', localField: '_id', foreignField: 'ownerUser' } },
-        { $match: { 'ownUser._id': { $exists: false } } } ,
-        { $lookup: { from: 'FamilyMember', as: 'memberUser', localField: '_id', foreignField: 'familyUser' } },
-        { $match: { 'memberUser._id': { $exists: false } } }], (err, results) => {
-        if (err) {
-            next(err);
-            return;
-        }
-        res.render('familymember', {
-            userName:req.user.name,
-            familyId: req.params.id,
-            users:results
-         }); 
-    });
+    try {
+        User.aggregate([
+            { $lookup: { from: 'Family', as: 'ownUser', localField: '_id', foreignField: 'ownerUser' } },
+            { $match: { 'ownUser._id': req.params.id } },
+            { $lookup: { from: 'FamilyMember', as: 'memberUser', localField: '_id', foreignField: 'familyUser' } },
+            { $match: { 'memberUser._id': { $exists: false } } }]).then((results) => {
+                res.render('familymember', {
+                    userName: req.user.name,
+                    familyId: req.params.id,
+                    users: results
+                });
+            });
+    } catch (err) { 
+        next(err);
+    }
 });
 
 // 添加family

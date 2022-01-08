@@ -7,6 +7,7 @@
                         <th>支出费用</th>
                         <th>日期</th>
                         {{!-- <th>时间</th> --}}
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -15,6 +16,13 @@
                             <td>{{value}}</td>
                             <td>{{day}}</td>
                             {{!-- <td>{{time}}</td> --}}
+                            <td>
+                                <a href='javascript:doDelete("/pay/delete","{{id}}")'>
+                                    <i class="small material-icons red-text text-lighten-1" 
+                                    style="font-size: 1.5rem;"
+                                    >delete</i>
+                                </a>
+                            </td>
                         </tr>
                     {{/each}}
                 </tbody>

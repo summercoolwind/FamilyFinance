@@ -7,20 +7,26 @@ const findSixMonthSummaryByUserId = require('./findSixMonthSummaryByUserId');
 
 // 理财界面加载实现
 router.get('/', ensureAuth, (req, res, next) => {
-    Income.find({ user: req.user._id }, (err, results) => {
-        if (err) {
-            next(err);
-        } else {
+    try {
+        Income.find({ user: req.user._id }).sort({ day: -1 }).then((results) => {
             let incomes = results.map(result => {
-                return { value: `${result.value}`, day: result.day, time: result.time };
+                const date = new Date(result.day);
+                return {
+                    id:result._id,
+                    value: `${result.value}`,
+                    day: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`,
+                    time: result.time
+                };
             });
             res.render('income', {
-                userName:req.user.name,
+                userName: req.user.name,
                 userId: req.user._id,
                 incomes: incomes
             });
-        }
-    });
+        });
+    } catch (err) { 
+        next(err);
+    }
 });
 
 // 查询近6个月数据
@@ -53,9 +59,18 @@ router.post('/add', ensureAuth, (req, res, next) => {
     });
 });
 
-// TODO  删除收入记录
-router.post('/delete', ensureAuth, (req, res) => {
-    
+//  删除收入记录
+router.post('/delete', ensureAuth, (req, res, next) => {
+    try {
+        const incomeId = req.body.id;
+        Income.deleteOne({ _id: incomeId }).then(result => {
+            res.status(200);
+            res.send('');
+        });
+    } catch (err) { 
+        console.log(err);
+        next(err);
+    }
 });
 
 module.exports = router;

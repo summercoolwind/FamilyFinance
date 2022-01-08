@@ -8,20 +8,27 @@ const findSixMonthSummaryByUserId = require('./findSixMonthSummaryByUserId');
 
 // 支出加载实现
 router.get('/', ensureAuth, (req, res, next) => {
-    Pay.find({ user: req.user._id }, (err, results) => {
-        if (err) {
-            next(err);
-        } else {
+    try {
+        Pay.find({ user: req.user._id }).sort({ day: -1 }).then((results) => {
             let pays = results.map(result => {
-                return { value: `${result.value}`, day: result.day, time: result.time };
+                const date = new Date(result.day);
+                return {
+                    id: result._id,
+                    value: `${result.value}`,
+                    day: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`,
+                    time: result.time
+                };
             });
             res.render('pay', {
-                userName:req.user.name,
+                userName: req.user.name,
                 userId: req.user._id,
                 pays: pays
             });
-        }
-    });
+            
+        });
+    } catch (err) { 
+        next(err);
+    }
 });
 
 // 近6个月支出查询实现
@@ -55,8 +62,17 @@ router.post('/add', ensureAuth, (req, res, next) => {
 });
 
 // 删除支出记录
-router.post('/delete', ensureAuth, (req, res) => {
-    
+router.post('/delete', ensureAuth, (req, res,next) => {
+    try {
+        const payId = req.body.id;
+        Pay.deleteOne({ _id: payId }).then(result => {
+            res.status(200);
+            res.send('');
+        });
+    } catch (err) { 
+        console.log(err);
+        next(err);
+    }
 });
 
 module.exports = router;

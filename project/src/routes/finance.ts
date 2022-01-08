@@ -10,7 +10,8 @@ const FinanceType = require('../models/FinanceType');
 router.get('/', ensureAuth, (req, res, next) => {
     // TODO  聚合查询
     Finance.aggregate([
-        { $match: { user: mongoose.Types.ObjectId(req.user._id) } }
+        { $match: { user: mongoose.Types.ObjectId(req.user._id) } },
+        { $sort: {startDay:-1}}
     ], (err, results) => {
         if (err) {
             next(err);
@@ -24,11 +25,13 @@ router.get('/', ensureAuth, (req, res, next) => {
                  tResults.forEach(tResult => {
                     typeResults[tResult._id] = tResult.typeName;
                  });
-                 let finances = results.map(result => {
+                let finances = results.map(result => {
+                    const date = new Date(result.startDay);
                     return {
+                            id: result._id,
                             name: result.name,
                             value: `${result.value}`,
-                            startDay: result.startDay,
+                            startDay: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`,
                             continueDay: String(result.continueDay),
                             financeType: typeResults[result.financeType]
                         };
@@ -59,7 +62,6 @@ router.get('/query/summary', ensureAuth, async (req, res) => {
 router.get('/add', ensureAuth, (req, res, next) => {
     try {
         FinanceType.find().lean().then(results => {
-            console.log(JSON.stringify(results));
             res.render('addfinance', {
                 userName: req.user.name,
                 userId: req.user._id,
@@ -87,8 +89,17 @@ router.post('/add', ensureAuth, (req, res, next) => {
 });
 
 // TODO 删除理财
-router.post('/delete', ensureAuth, (req, res) => {
-    
+router.post('/delete', ensureAuth, (req, res, next) => {
+    try {
+        const financeId = req.body.id;
+        Finance.deleteOne({ _id: financeId }).then(result => {
+            res.status(200);
+            res.send('');
+        });
+    } catch (err) { 
+        console.log(err);
+        next(err);
+    }
 });
 
 module.exports = router;
