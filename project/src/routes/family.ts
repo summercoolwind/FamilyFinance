@@ -61,7 +61,10 @@ router.get('/', ensureAuth, (req, res, next) => {
                         };
                     });
                     let family = mResult[0].family[0];
-                    User.find({ id:family.ownerUser }, (uErr, uResults) => {
+                    User.aggregate([
+                        { $match: { _id: family.ownerUser } },
+                        { $lookup: { from: 'Income', localField: '_id', foreignField: 'user', as: 'incomes' } }, 
+                        { $lookup: { from: 'Pay', localField: '_id', foreignField: 'user', as: 'pays' } },], (uErr, uResults) => {
                         if (uErr) {
                             console.log(uErr);
                         } else if (uResults.length > 0) {
@@ -86,18 +89,12 @@ router.get('/', ensureAuth, (req, res, next) => {
     });
 });
 
-//  查询成员的总收入和支出，和余额
-router.get('/summary', ensureAuth, (req, res, next) => {
-    const familyId = req.params.id;
-
-});
-
 // 根据family id查询成员
 router.get('/member/:id', ensureAuth, (req, res, next) => {
     try {
         User.aggregate([
             { $lookup: { from: 'Family', as: 'ownUser', localField: '_id', foreignField: 'ownerUser' } },
-            { $match: { 'ownUser._id': req.params.id } },
+            { $match: { 'ownUser._id': { $exists: false } } },
             { $lookup: { from: 'FamilyMember', as: 'memberUser', localField: '_id', foreignField: 'familyUser' } },
             { $match: { 'memberUser._id': { $exists: false } } }]).then((results) => {
                 res.render('familymember', {
