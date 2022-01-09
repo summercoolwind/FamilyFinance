@@ -26,7 +26,6 @@ router.get('/', ensureAuth, (req, res, next) => {
                     next(mErr);
                     return;
                 }
-                console.log(JSON.stringify(mResults));
                 let resultUsers = [];
                 if (mResults.length > 0) {
                     mResults.forEach(mResult => {
