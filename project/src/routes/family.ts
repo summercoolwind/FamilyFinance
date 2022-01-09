@@ -18,23 +18,28 @@ router.get('/', ensureAuth, (req, res, next) => {
             // 有自己创建的家庭的
             let result = results[0];
             FamilyMember.aggregate([
-                { $match: {family: mongoose.Types.ObjectId(result._id)}},
-                { $lookup: { from: 'Family', as: 'ownUser', localField: '_id', foreignField: 'ownerUser' } },
                 { $lookup: { from: 'User', localField: 'familyUser', foreignField: '_id', as: 'users', } },
-                ],
-            (mErr, mResult) => {
+                { $match: { family: mongoose.Types.ObjectId(result._id) } },],
+            (mErr, mResults) => {
                 if (mErr) {
                     console.log(mErr);
-                    res.render('error/500');
+                    next(mErr);
                     return;
                 }
-                let resultUsers = mResult.length > 0 ? mResult[0].users.map(element => {
-                    return {
-                        userName: element.name,
-                        owner : false
-                    };
-                }) : [];
-                resultUsers.push({userName:req.user.name, owner : true});
+                console.log(JSON.stringify(mResults));
+                let resultUsers = [];
+                if (mResults.length > 0) {
+                    mResults.forEach(mResult => {
+                        mResult.users.forEach(element => {
+                            resultUsers.push({
+                                userId: element._id,
+                                userName: element.name,
+                                owner: false
+                            });
+                        });
+                    });
+                }
+                resultUsers.push({userId:req.user._id,userName:req.user.name, owner : true});
                 res.render('family', {
                     userName:req.user.name,
                     familyName: result.name,
@@ -146,6 +151,35 @@ router.post('/addmember', ensureAuth, (req, res, next) => {
         }
         res.redirect('/family');
     });
+});
+
+// 删除家庭
+router.post('/delete', ensureAuth, async (req, res, next) => {
+// 刷新所有FamilyMember中对应familyId，删除对应familyId的Family表
+    try {
+        const familyId = req.body.id;
+        console.log(`delete family ${familyId}`);
+        await FamilyMember.deleteMany({ family: familyId });
+        await Family.deleteMany({ id: familyId });
+        res.send('');
+    } catch (err) { 
+        console.log(err);
+        next(err);
+    }
+});
+
+// 删除家庭成员
+router.post('/member/delete', ensureAuth, async (req, res, next) => {
+    // 刷新所有FamilyMember中对应familyId，删除对应familyId的Family表
+    try {
+        const memberId = req.body.id;
+        console.log(`delete member ${memberId}`);
+        await FamilyMember.deleteMany({ familyUser: memberId });
+        res.send('');
+    } catch (err) { 
+        console.log(err);
+        next(err);
+    }
 });
 
 module.exports = router;

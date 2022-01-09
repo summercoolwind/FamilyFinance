@@ -5,6 +5,9 @@ module.exports = function (passport) {
   passport.use(new LocalStrategy(
     function (username, password, done) {
       User.findOne({ name: username }, (err, userInfo) => {
+        if (userInfo === null) { 
+          return done(null, false);
+        }
         if (userInfo.password !== password) {
           return done(null, false);
         }

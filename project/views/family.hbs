@@ -2,16 +2,14 @@
 <div class="section text-aligin-center family-page">
 <div class="card">
     <div class="card-content">
-{{#if familyName}}
-<h6><i class="fas fa-piggy-bank"></i>家庭名称:{{familyName}}
-{{#if isFamilyOwner}}
-    <a href='javascript:doDelete("/family/delete","{{id}}")' title='删除'>
-            <i class="small material-icons red-text text-lighten-1" 
-            style="font-size: 1.5rem;"
-            >delete</i>
-    </a>
-{{/if}}
-</h6>
+    {{#if familyName}}
+    <div class="row"><i class="fas fa-piggy-bank">家庭名称:{{familyName}}</i>
+    {{#if isFamilyOwner}}
+        <a href='javascript:doDelete("/family/delete","{{familyId}}")' title='删除'>
+            <i class="small material-icons red-text text-lighten-1" >delete</i>
+        </a>
+    {{/if}}
+    </div>
 <div class="row">
     <div class="col s2"></div>
     <div class="col s8">
@@ -20,7 +18,9 @@
                 <tr>
                     <th>用户名</th>
                     <th>创建者</th>
+                     {{#if isFamilyOwner}}
                     <th>操作</th>
+                    {{/if}}
                 </tr>
             </thead>
 
@@ -31,32 +31,34 @@
                     <td>{{userName}}</td>
                     {{#if owner}}
                     <td>是</td>
-                    <td>
-                        <a>
-                            <i class="small material-icons grey-text text-lighten-1" 
-                            style="font-size: 1.5rem;" disabled 
-                            >delete</i>
-                        </a>
-                    </td>
+                       {{#if ../isFamilyOwner}}
+                        <td>
+                            <a>
+                                <i class="small material-icons grey-text text-lighten-1" 
+                                style="font-size: 1.5rem;" disabled 
+                                >delete</i>
+                            </a>
+                        </td>
+                        {{/if}}
                     {{else}}
                     <td>否</td>
-                    {{#if ../isFamilyOwner}}
-                    <td>
-                        <a href='javascript:doDelete("/family/member/delete","{{id}}")' title='删除'>
-                                <i class="small material-icons red-text text-lighten-1" 
-                                style="font-size: 1.5rem;"
+                       {{#if ../isFamilyOwner}}
+                        <td>
+                            <a href='javascript:doDelete("/family/member/delete","{{userId}}")' title='删除'>
+                                    <i class="small material-icons red-text text-lighten-1" 
+                                    style="font-size: 1.5rem;"
+                                    >delete</i>
+                            </a>
+                        </td>
+                        {{else}}
+                        <td>
+                            <a>
+                                <i class="small material-icons grey-text text-lighten-1" 
+                                style="font-size: 1.5rem;" disabled 
                                 >delete</i>
-                        </a>
-                    </td>
-                    {{else}}
-                    <td>
-                         <a>
-                            <i class="small material-icons grey-text text-lighten-1" 
-                            style="font-size: 1.5rem;" disabled 
-                            >delete</i>
-                        </a>
-                    </td>
-                    {{/if}}
+                            </a>
+                        </td>
+                        {{/if}}
                     {{/if}} 
                 </tr>
                 {{/each}}
