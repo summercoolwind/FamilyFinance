@@ -7,8 +7,7 @@
     "build": "webpack --config  --mode=product webpack.common.config.js",
     "tsc": "tsc",
     "watch-ts": "tsc -w",
-    "start": "ts-node-dev ./src/app.ts  --mode=development",
-    "start_electron": "electron ./dist/main.js"
+    "start": "ts-node-dev ./src/app.ts  --mode=development"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
@@ -33,7 +32,6 @@
     "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "dotenv": "^10.0.0",
-    "electron": "^10.1.5",
     "express": "~4.16.1",
     "express-graphql": "^0.12.0",
     "express-handlebars": "^6.0.2",
@@ -69,7 +67,6 @@
     "redux": "^4.0.5",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.7",
-    "run-electron": "^1.0.0",
     "serve-favicon": "^2.5.0",
     "styled-components": "^5.2.1",
     "ts-node": "^10.4.0",
