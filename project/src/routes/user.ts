@@ -30,7 +30,6 @@ router.post('/add', (req, res,next) => {
     let { name } = body;
     User.find({ name: name }, (err, results) => {
         if (err) {
-            console.log(err);
             next(err);
         } else if (results.length > 0) {
             res.render('register',{
@@ -41,7 +40,6 @@ router.post('/add', (req, res,next) => {
             let user = new User(body);
             user.save(user, (err, result) => {
                 if (err) {
-                    console.log(err);
                     next(err);
                 } else {
                     res.render('login', {
@@ -60,7 +58,6 @@ router.post('/update', ensureAuth, (req, res, next) => {
     let { password, roleId } = body;
     User.updateOne(user, {password,role:roleId},(err, result) => {
         if (err) {
-            console.log(err);
             next(err);
         }
     });

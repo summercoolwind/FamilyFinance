@@ -69,7 +69,6 @@ router.get('/add', ensureAuth, (req, res, next) => {
             });
         });
     } catch (err) { 
-        console.log(err);
         next(err);
     }
 });
@@ -80,7 +79,6 @@ router.post('/add', ensureAuth, (req, res, next) => {
     let finance = new Finance({ ...body,  user: req.user._id});
     finance.save(finance, (err, result) => {
         if (err) {
-            console.log(err);
             next(err);
         } else {
             res.redirect('/finance');
@@ -97,7 +95,6 @@ router.post('/delete', ensureAuth, (req, res, next) => {
             res.send('');
         });
     } catch (err) { 
-        console.log(err);
         next(err);
     }
 });

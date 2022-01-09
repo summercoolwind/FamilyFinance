@@ -53,7 +53,6 @@ router.post('/add', ensureAuth, (req, res, next) => {
     let pay = new Pay({ ...body,  day:isoDate,user: req.user._id});
     pay.save(pay, (err, result) => {
         if (err) {
-            console.log(err);
             next(err);
         } else {
             res.redirect('/pay');
@@ -70,7 +69,6 @@ router.post('/delete', ensureAuth, (req, res,next) => {
             res.send('');
         });
     } catch (err) { 
-        console.log(err);
         next(err);
     }
 });

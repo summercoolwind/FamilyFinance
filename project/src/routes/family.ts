@@ -12,7 +12,6 @@ router.get('/', ensureAuth, (req, res, next) => {
     // 给家庭添加成员，根据用户查询到Family，再根据family查询member成员的userName
     Family.find({ ownerUser: req.user._id }, (err, results) => {
         if (err) {
-            console.log(err);
             next(err);
         } else if (results.length > 0) {
             // 有自己创建的家庭的
@@ -22,7 +21,6 @@ router.get('/', ensureAuth, (req, res, next) => {
                 { $match: { family: mongoose.Types.ObjectId(result._id) } },],
             (mErr, mResults) => {
                 if (mErr) {
-                    console.log(mErr);
                     next(mErr);
                     return;
                 }
@@ -70,7 +68,7 @@ router.get('/', ensureAuth, (req, res, next) => {
                         { $lookup: { from: 'Income', localField: '_id', foreignField: 'user', as: 'incomes' } }, 
                         { $lookup: { from: 'Pay', localField: '_id', foreignField: 'user', as: 'pays' } },], (uErr, uResults) => {
                         if (uErr) {
-                            console.log(uErr);
+                            next(uErr);
                         } else if (uResults.length > 0) {
                             resultUsers.push({
                                 userName: uResults[0].name,
@@ -119,14 +117,12 @@ router.post('/add', ensureAuth, (req, res, next) => {
     let family = new Family({ name: familyName, ownerUser: req.user.id });
     Family.find({ name: familyName }, (fErr, fResults) => {
         if (fErr) {
-            console.log(fErr);
             next(fErr);
         } else if (fResults.length > 0) {
             res.redirect('/family');
         } else {
             family.save(family, (err, result) => {
                 if (err) {
-                    console.log(err);
                     next(err);
                 } else {
                     res.redirect('/family');
@@ -144,7 +140,6 @@ router.post('/addmember', ensureAuth, (req, res, next) => {
     let familyMember = new FamilyMember({family:family,familyUser:familyUser});
     familyMember.save(familyMember, (err, result) => {
         if (err) {
-            console.log(err);
             next(err);
             return;
         }
@@ -162,7 +157,6 @@ router.post('/delete', ensureAuth, async (req, res, next) => {
         await Family.deleteMany({ id: familyId });
         res.send('');
     } catch (err) { 
-        console.log(err);
         next(err);
     }
 });
@@ -176,7 +170,6 @@ router.post('/member/delete', ensureAuth, async (req, res, next) => {
         await FamilyMember.deleteMany({ familyUser: memberId });
         res.send('');
     } catch (err) { 
-        console.log(err);
         next(err);
     }
 });

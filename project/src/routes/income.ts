@@ -51,7 +51,6 @@ router.post('/add', ensureAuth, (req, res, next) => {
     let income = new Income({ ...body, day:isoDate, user: req.user._id});
     income.save(income, (err, result) => {
         if (err) {
-            console.log(err);
             next(err);
         } else {
             res.redirect('/income');
@@ -68,7 +67,6 @@ router.post('/delete', ensureAuth, (req, res, next) => {
             res.send('');
         });
     } catch (err) { 
-        console.log(err);
         next(err);
     }
 });
